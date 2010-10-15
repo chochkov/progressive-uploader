@@ -1,0 +1,11 @@
+#files_list_container
+	- @files_list.each do |file|
+		%p file	
+%div
+	%label title
+	%input.text{:name => 'title', :id => 'file_title'}
+%form.setup{:action => "/?X-Progress-ID=#{@pid}",:method => 'post', :enctype => 'multipart/form-data', :id => 'file_submit', :target => 'upld_target'}
+	%div
+		%label file
+		%input{:name => 'file', :type => 'file'}
+	%input.submit{:type => 'submit', :value => 'upload'}

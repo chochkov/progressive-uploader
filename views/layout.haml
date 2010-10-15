@@ -1,0 +1,18 @@
+!!!
+%html
+	%head
+		%title Progressive File Collector
+		%meta{:http_equiv => "content-type", :content => "text/html", :charset => "utf-8"}
+		%link{:rel => 'stylesheet', :type => "text/css", :href => 'style.css', :media => 'all'}
+		%script{:type => 'text/javascript', :src => 'upload.js'}
+		%script{:type => 'text/javascript'}	window.onload = function windowLoad() {			document.getElementById('files_total_count_span').innerHTML = '#{@files_count}'; var form = document.getElementById('file_submit');	form.setAttribute('onsubmit', 'return Upld.uploadStart()');}
+	%body
+		.header.centered
+			%p progressive <strong>file receiver</strong> (<span id='files_total_count_span'></span> files)
+		.main.layout.centered
+			=yield
+			#upload_progress.layout.centered
+				%p progress:
+				%p.progress_percentage#progress_percentage 0%
+		.centered#iframe_holder
+		.footer.layout.centered

@@ -1,0 +1,16 @@
+body{margin:0;font-family:Arial,Verdana;}
+p{margin:0;}
+label{font-size:.9em;color:#333;}
+.header{height:43px;width:80%;background:#555;padding:10px 0 0;text-align:center;}
+.main{text-align:center;background:#CBFFFF;padding:20px 0 45px;}
+.footer{background:#888;height:25px;}
+.layout{width:600px;}
+.centered{margin:auto;}
+input{height:23px;width:310px;margin-top:25px;}
+input.text{font-size:16px;padding:3px 6px;width:298px!important;}
+input.submit{width:80px;}
+.header p{color:#fff;font-size:23px;padding:0;}
+#upload_progress{display:visible;margin-top:20px;}
+#upload_progress p{font-size:10px;}
+p.progress_percentage{font-size:16px!important;font-weight:bold;}
+iframe{width:0;height:0;border:0 solid #fff;}
