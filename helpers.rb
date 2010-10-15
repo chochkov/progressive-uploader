@@ -3,6 +3,11 @@ helpers do
     'uploads/' if option == 'dir' 
   end
   def hash 
-    Time.now.to_s.hash.to_s
+    h = Time.now.to_s.hash
+    if h < 0 then 
+      h = h.to_s
+      h["-"] = 'A'
+    end
+    h.to_s
   end
 end

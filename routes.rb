@@ -33,9 +33,7 @@ post '/title' do
 end
 
 post '/upload-status' do
-  puts params
+  Time.now
 end
 
-not_found do
-  redirect '/'
-end
+not_found do redirect '/' end

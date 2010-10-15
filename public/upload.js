@@ -1,34 +1,35 @@
 Upld = {
-	
-	timeout : 1000,
+	timeout : 500,
 	post_title_url : '/title',
 	get_upld_status_url : '/upload-status',	
 
 	uploadStart : function(form){
 		document.getElementById('iframe_holder').innerHTML = "<iframe id='upld_target' name='upld_target' src='#'></iframe>"
-		this.interval = setTimeout("Upld.inquire_progress()", this.timeout);
+		interval = setTimeout("Upld.inquireProgress()", this.timeout);
 		return true;
 	},
 	
 	uploadComplete : function(upload_id){
-		clearTimeout(this.interval);
+		clearTimeout(interval);
 		
 		var title = document.getElementById('file_title').value;
 		if(title == '' || title == null){
 			return Upld.updateUploadsList(upload_id);
 		}
 		var params = "id="+upload_id+"&title="+title;
-		http = this.ajax_prepare(this.post_title_url, params, 'POST', null);
+		http = this.ajaxPrepare(this.post_title_url, params, 'POST', null);
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
+				clearTimeout(interval);
 				return Upld.updateUploadsList(upload_id);
 			}
+			clearTimeout(interval);
 		}
 		http.send(params);		
 	},
 	
 	updateUploadsList : function(id){
-		http = this.ajax_prepare(this.post_title_url+'/'+id, 0, 'GET', null);
+		http = this.ajaxPrepare(this.post_title_url+'/'+id, 0, 'GET', null);
 		http.onreadystatechange = function(){
 			if(http.readyState == 4 && http.status == 200){
 				title = http.responseText;
@@ -41,26 +42,20 @@ Upld = {
 		http.send(null);
 	},
 	
-	inquire_progress : function(){
-			
-		pid = ''; // GET THE PID HERE!
-		http = this.ajax_prepare(this.get_upld_status_url, 0, 'GET', pid);
+	inquireProgress : function(){
+		pid = document.getElementById('progress_id_value').value;
+		http = this.ajaxPrepare(this.get_upld_status_url, 0, 'GET', pid);
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) {
-				as = 'ss';
-				// percentage = ..
-				// succcess on get request
+				percentage = http.responseText;
+				p = document.getElementById('progress_percentage').innerHTML = percentage + "%";
 			}
 		}
-		http.send(params);
-	
-		p = document.getElementById('progress_percentage');
-		p.innerHTML = percentage + "%";
-		
-		this.interval = setTimeout("Upld.inquire_progress()", this.timeout);
+		http.send(null);
+		interval = setTimeout("Upld.inquireProgress()", this.timeout);
 	},
 	
-	ajax_prepare : function(url, params, method, pid_header){
+	ajaxPrepare : function(url, params, method, pid_header){
 		var http = new XMLHttpRequest();
 		
 		http.open(method, url, true);
