@@ -1,4 +1,4 @@
 sinatra
 haml
 sequel
-sqlite
+sqlite3-ruby --version 1.3.1
