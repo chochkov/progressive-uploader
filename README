@@ -1,0 +1,1 @@
+A file uploader, operating hidden from the user, letting them interact with the rest of the site/form while huge uploads are being carried out in the background. Shows real time upload progress in percentage and uses Ajax for refreshing the page.
