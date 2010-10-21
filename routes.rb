@@ -1,5 +1,5 @@
 get '/' do  
-  @pid = hash.concat((0...10).map{ ('a'..'z').to_a[rand(26)] }.join)
+  @pid = random_string
   @files_list = DB[:uploads].map(:title)
   @files_count = @files_list.length
   haml :index
@@ -8,16 +8,16 @@ end
 post '/' do
   return unless params[:file] && (tmp = params[:file][:tempfile]) && (filename = params[:file][:filename])
 
-  random_hash = hash
+  new_name = random_string
 
   begin
-    path = File.join(config('dir'), random_hash)
+    path = File.join(config('dir'), new_name)
     File.open(path, 'wb') do |file|
       while part = tmp.read(65536)
         file.write(part)
       end  
     end
-    upload_id = DB[:uploads].insert(:filename => filename, :title => filename, :hash => random_hash)
+    upload_id = DB[:uploads].insert(:filename => filename, :title => filename, :hash => new_name)
     session[:upload_id] = upload_id
   rescue
     upload_id = -1;  
@@ -25,6 +25,13 @@ post '/' do
   
   "<script language='javascript' type='text/javascript'>window.top.window.Upld.uploadComplete('"+upload_id.to_s+"');</script>"
 end
+
+# TODO - serve the files.
+# get '/upload/:id' do |id|
+#  details = DB['SELECT hash, filename FROM uploads WHERE id = ?', id]
+#  path = File.join(config('dir'), new_name)
+#  send_file path
+# end
 
 get '/title/:id' do |id|
   DB[:uploads].filter(:id => id).get(:title)

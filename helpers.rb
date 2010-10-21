@@ -2,12 +2,7 @@ helpers do
   def config option
     'uploads/' if option == 'dir' 
   end
-  def hash 
-    h = Time.now.to_s.hash
-    if h < 0 then 
-      h = h.to_s
-      h["-"] = 'A'
-    end
-    h.to_s
+  def hash
+    (0...10).map{ ('a'..'z').to_a[rand(26)] }.join.concat(Time.now.usec.to_s)
   end
 end
