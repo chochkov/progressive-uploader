@@ -1,3 +1,20 @@
-Technologies: Ruby, Sinatra, Javascript
+<b>Technologies:</b> Ruby, Sinatra, Sqlite, Ajax
 
-A file uploader, operating hidden from the user, letting them interact with the rest of the site/form while huge uploads are being carried out in the background. Shows real time upload progress in percentage and uses Ajax for refreshing the page.
+<b>Description:</b> A file uploader, operating hidden from the user, letting them interact with the rest of the site/form while huge uploads are being carried out in the background. Shows real time upload progress in percentage and uses Ajax for refreshing the page.
+
+<b>Usage:</b> It relies on the Apache upload progress module (alternatives to this exist of course) and proper vhost config
+
+<Location />
+    # enable tracking uploads in /
+    TrackUploads On
+</Location>
+
+<Location /progress>
+    # enable upload progress reports in /progress
+    ReportUploads On
+</Location>
+
+so that a GET request with X-Progress-ID header would return a json formated progress report like shown here http://github.com/drogus/apache-upload-progress-module for that ID
+
+<b>TODO: </b>
+1. the Form X-Progress-ID parameter needs to be changed to another one after a subsequent upload has been carried out and the title box needs to be cleared as well. This way it will be possible to upload file after file without reloading the page and yet see all updates.
