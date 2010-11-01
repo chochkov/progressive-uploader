@@ -1,10 +1,9 @@
-%w(rubygems sinatra haml data/init).each do |gem|
+%w(sinatra haml sequel).each do |gem|
   require gem
 end
 
-set :environment, :development
-enable :sessions
+set :server => %w[thin webrick], :environment => :development, :sessions => true
 
-require 'helpers.rb'
-
+load('data/init.rb')
+load('helpers.rb')
 load('routes.rb')
